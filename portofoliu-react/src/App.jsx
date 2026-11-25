@@ -1,4 +1,13 @@
 import { useState } from "react";
+import { useEffect } from "react";
+
+const navItems = [
+  { id: "despre", label: "DESPRE" },
+  { id: "studii", label: "STUDII" },
+  { id: "proiecte", label: "PROIECTE" },
+  { id: "skilluri", label: "SKILLURI" },
+  { id: "contact", label: "CONTACT" },
+];
 
 const educationItems = [
   {
@@ -105,8 +114,29 @@ export default function App() {
     email: "",
     message: "",
   });
+
+  const [activeSection, setActiveSection] = useState("despre");
+  const [hoveredSection, setHoveredSection] = useState(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + 180;
+      for (let i = navItems.length - 1; i >= 0; i -= 1) {
+        const el = document.getElementById(navItems[i].id);
+        if (el && el.offsetTop <= scrollPosition) {
+          setActiveSection(navItems[i].id);
+          break;
+        }
+      }
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const [sent, setSent] = useState(false);
-const [photoIndex, setPhotoIndex] = useState(0);
+  const [photoIndex, setPhotoIndex] = useState(0);
 
   const prevPhoto = () => {
     setPhotoIndex((prev) =>
@@ -140,21 +170,32 @@ const [photoIndex, setPhotoIndex] = useState(0);
           </a>
 
           <nav className={`desktop-nav ${menuOpen ? "is-open" : ""}`}>
-            <a href="#despre" onClick={() => setMenuOpen(false)}>
-              DESPRE
-            </a>
-            <a href="#studii" onClick={() => setMenuOpen(false)}>
-              STUDII
-            </a>
-            <a href="#proiecte" onClick={() => setMenuOpen(false)}>
-              PROIECTE
-            </a>
-            <a href="#skilluri" onClick={() => setMenuOpen(false)}>
-              SKILLURI
-            </a>
-            <a href="#contact" onClick={() => setMenuOpen(false)}>
-              CONTACT
-            </a>
+            {navItems.map((item) => {
+              const isActive = activeSection === item.id;
+              return (
+                <a
+                  key={item.id}
+                  href={`#${item.id}`}
+                  className={isActive ? "is-active" : ""}
+                  onClick={() => {
+                    setActiveSection(item.id);
+                    setMenuOpen(false);
+                  }}
+                  onMouseEnter={() => setHoveredSection(item.id)}
+                  onMouseLeave={() => setHoveredSection(null)}
+                >
+                  <span>{item.label}</span>
+                  {(isActive || hoveredSection === item.id) && (
+                    <img
+                      src="/ketchup-splash.jpg"
+                      alt=""
+                      className="ketchup-drop"
+                      aria-hidden="true"
+                    />
+                  )}
+                </a>
+              );
+            })}
           </nav>
 
           <button
