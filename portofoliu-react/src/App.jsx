@@ -35,15 +35,15 @@ const educationItems = [
 ];
 const profilePhotos = [
   {
-    src: "/public/poza1.jpg",
+    src: `${import.meta.env.BASE_URL}poza1.jpg`,
     caption: "salut, eu sunt Laura!",
   },
   {
-    src: "/public/poza2.jpg",
+    src: `${import.meta.env.BASE_URL}poza2.jpg`,
     caption: "Zebra Hackathon",
   },
   {
-    src: "/public/poza3.jpg",
+    src: `${import.meta.env.BASE_URL}poza3.jpg`,
     caption: "IT job fair with friends",
   },
 ];
@@ -78,7 +78,7 @@ const projectItems = [
     description:
       "Joc 3D psychological horror în care un tehnician recuperează benzi vechi într-un studio bântuit de păpuși.",
     tag: "3D · HORROR",
-    link: "https://github.com/ilie-laura/RGD_Game",
+    link: "https://github.com/deliagstanescu/RGD_Game",
   },
   {
     number: "№ 05",
@@ -187,7 +187,7 @@ export default function App() {
                   <span>{item.label}</span>
                   {(isActive || hoveredSection === item.id) && (
                     <img
-                      src="/ketchup-splash.jpg"
+                      src={`${import.meta.env.BASE_URL}ketchup-splash.jpg`}
                       alt=""
                       className="ketchup-drop"
                       aria-hidden="true"
@@ -469,7 +469,7 @@ export default function App() {
                   <span className="contact-icon" aria-hidden="true">
                     ↓
                   </span>
-                  <a href="/src/assets/CV_ilie_ioana_laura.pdf" download="CV_Ilie_Ioana_Laura.pdf">
+                  <a href={`${import.meta.env.BASE_URL}CV_ilie_ioana_laura.pdf`} download="CV_Ilie_Ioana_Laura.pdf">
                     DESCARCĂ CV
                   </a>
                 </li>
